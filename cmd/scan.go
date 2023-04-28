@@ -54,7 +54,7 @@ func printResults(out io.Writer, results []scan.Results) error {
 		message += fmt.Sprintf("%s:", r.Host)
 
 		if r.NotFound {
-			message += fmt.Sprintf("Host not found\n\n")
+			message += fmt.Sprintf(" Host not found\n\n")
 			continue
 		}
 
