@@ -1,40 +1,48 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
+	"io"
+	"os"
 	"fmt"
 
+	"github.com/Nelwhix/pScan/scan"
 	"github.com/spf13/cobra"
 )
 
-// closeCmd represents the close command
 var closeCmd = &cobra.Command{
 	Use:   "close",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "For closing open TCP ports",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ports, err := cmd.Flags().GetIntSlice("ports")
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("close called")
+		if err != nil {
+			return err 
+		}
+
+		return closeAction(os.Stdout, ports)
 	},
 }
 
 func init() {
-	hostsCmd.AddCommand(closeCmd)
+	rootCmd.AddCommand(closeCmd)
 
-	// Here you will define your flags and configuration settings.
+	closeCmd.Flags().IntSliceP("ports", "p", []int{}, "ports to scan")
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// closeCmd.PersistentFlags().String("foo", "", "A help for foo")
+func closeAction(out io.Writer, ports []int) error {
+	message := ""
+	hl := &scan.HostsList{[]string{"localhost"}}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// closeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	results := scan.Run(hl, ports)
+
+	for _, r := range results {
+		for _, p := range r.PortStates {
+			if (!p.Open) {
+				message += fmt.Sprintf("%s:%d is already closed\n", r.Host, p.Port)
+			}
+		}
+	}
+
+	_, err := fmt.Fprint(out, message)
+	return err
 }
