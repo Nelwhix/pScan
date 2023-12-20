@@ -1,6 +1,8 @@
 # pScan
 A CLI tool that scans the ports on a host address and tells you which is open and closed. 
 
+## Installation
+
 ## Commands
 To add a new host write
 ```bash
