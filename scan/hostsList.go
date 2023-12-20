@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	ErrExists = errors.New("Host already in the list")
-	ErrNotExists = errors.New("Host not in the list")
+	ErrExists    = errors.New("host already in the list")
+	ErrNotExists = errors.New("host not in the list")
 )
 
 type HostsList struct {
@@ -52,10 +52,10 @@ func (hl *HostsList) Load(hostsFile string) error {
 
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
-			return nil 
+			return nil
 		}
-		
-		return err 
+
+		return err
 	}
 	defer f.Close()
 
@@ -65,7 +65,7 @@ func (hl *HostsList) Load(hostsFile string) error {
 		hl.Hosts = append(hl.Hosts, scanner.Text())
 	}
 
-	return nil 
+	return nil
 }
 
 func (hl *HostsList) Save(hostsFile string) error {
