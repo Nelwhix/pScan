@@ -8,7 +8,7 @@ import (
 
 type PortState struct {
 	Port int
-	Open state 
+	Open state
 }
 
 type state bool
@@ -27,29 +27,32 @@ func scanPort(host string, port int) PortState {
 	}
 
 	address := net.JoinHostPort(host, fmt.Sprintf("%d", port))
-	scanConn, err := net.DialTimeout("tcp", address, 1 * time.Second)
+	scanConn, err := net.DialTimeout("tcp", address, 1*time.Second)
 
 	if err != nil {
-		return p 
+		return p
 	}
-	scanConn.Close()
+	err = scanConn.Close()
+	if err != nil {
+		return PortState{}
+	}
 	p.Open = true
 
 	return p
 }
 
 type Results struct {
-	Host string
-	NotFound bool
+	Host       string
+	NotFound   bool
 	PortStates []PortState
 }
 
 func Run(hl *HostsList, ports []int) []Results {
-	res := make([]Results, 0, len(hl.Hosts))	
+	res := make([]Results, 0, len(hl.Hosts))
 
 	for _, h := range hl.Hosts {
 		r := Results{
-			Host: h, 
+			Host: h,
 		}
 
 		if _, err := net.LookupHost(h); err != nil {
@@ -61,8 +64,8 @@ func Run(hl *HostsList, ports []int) []Results {
 		for _, p := range ports {
 			r.PortStates = append(r.PortStates, scanPort(h, p))
 		}
-		res = append(res, r) 
+		res = append(res, r)
 	}
 
-	return res 
+	return res
 }
