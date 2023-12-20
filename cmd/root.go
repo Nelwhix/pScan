@@ -12,7 +12,7 @@ var rootCmd = &cobra.Command{
 	Version: "0.0.2",
 	Use:     "pScan",
 	Short:   "Fast TCP port scanner",
-	Long:    "pScan - short for Port Scanner - executes TCP port scan on a list of hosts.\npScan allows you to add, list, and delete hosts from the list.\npScan executes a port scan on specified TCP ports. You can customize the target ports using a command line flag.",
+	Long:    "pScan - short for Port Scanner - executes TCP port scan on a list of hosts.\npScan allows you to add, list, and delete hosts from the list.\npScan executes a port scan on specified TCP ports. You can customize the target ports using a command line flag.\npScan can also kill a running process on a port freeing it up for use\n",
 }
 
 func Execute() {
