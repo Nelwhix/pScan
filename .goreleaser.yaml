@@ -16,7 +16,7 @@ before:
     - go generate ./...
 
 builds:
-  - binary: pScan
+  - binary: pscan
     goarch:
       - amd64
       - arm64
@@ -34,7 +34,7 @@ universal_binaries:
 
 brews:
   -
-    name: pScan
+    name: pscan
     homepage: "https://github.com/Nelwhix/pScan"
     tap:
       owner: Nelwhix
