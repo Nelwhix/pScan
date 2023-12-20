@@ -24,7 +24,7 @@ func Execute() {
 
 func init() {
 	dataDir := utils.GetDataDir()
-	rootCmd.PersistentFlags().StringP("hosts-file", "f", filepath.Join(dataDir, "pScan.hosts"), "pScan hosts file")
+	rootCmd.PersistentFlags().StringP("hosts-file", "f", filepath.Join(dataDir, "pScan.hosts"), "file to store hosts cli is monitoring")
 
 	versionTemplate := `{{printf "%s: %s - version %s\n" .Name .Short .Version}}`
 	rootCmd.SetVersionTemplate(versionTemplate)

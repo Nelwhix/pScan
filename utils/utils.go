@@ -1,9 +1,12 @@
 package utils
 
 import (
+	"github.com/Nelwhix/pScan/entity"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 )
 
 func GetDataDir() string {
@@ -30,4 +33,23 @@ func GetDataDir() string {
 	}
 
 	return dataDir
+}
+
+func ParseProcessOutput(output string) entity.Process {
+	input := strings.Fields(output)
+	// removing the headers from lsof
+	trimmedInput := input[9:]
+	var process entity.Process
+
+	process.Command = trimmedInput[0]
+	process.PID, _ = strconv.Atoi(trimmedInput[1])
+	process.User = trimmedInput[2]
+	process.FD = trimmedInput[3]
+	process.Type = trimmedInput[4]
+	process.Device = trimmedInput[5]
+	process.Size = trimmedInput[6]
+	process.Node = trimmedInput[7]
+	process.Name = trimmedInput[8]
+
+	return process
 }

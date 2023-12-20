@@ -17,7 +17,7 @@ type HostsList struct {
 	Hosts []string
 }
 
-func (hl *HostsList) search(host string) (bool, int) {
+func (hl *HostsList) Search(host string) (bool, int) {
 	sort.Strings(hl.Hosts)
 
 	i := sort.SearchStrings(hl.Hosts, host)
@@ -30,7 +30,7 @@ func (hl *HostsList) search(host string) (bool, int) {
 }
 
 func (hl *HostsList) Add(host string) error {
-	if found, _ := hl.search(host); found {
+	if found, _ := hl.Search(host); found {
 		return fmt.Errorf("%w: %s", ErrExists, host)
 	}
 
@@ -39,7 +39,7 @@ func (hl *HostsList) Add(host string) error {
 }
 
 func (hl *HostsList) Remove(host string) error {
-	if found, i := hl.search(host); found {
+	if found, i := hl.Search(host); found {
 		hl.Hosts = append(hl.Hosts[:i], hl.Hosts[i+1:]...)
 		return nil
 	}
