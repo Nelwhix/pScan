@@ -2,6 +2,11 @@
 A CLI tool that scans the ports on a host address and tells you which is open and closed. 
 
 ## Installation
+Installation is only available on homebrew for now. Run:
+```bash 
+    brew tap nelwhix/nelwhix
+    brew install pscan 
+```
 
 ## Commands
 To add a new host write
