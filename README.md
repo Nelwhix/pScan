@@ -18,4 +18,8 @@ replace 8080 etc. with the ports you want to check if closed
 
 a closed port means it is free for use, an open port means it is in use
 
-WIP: How to close open ports
+To kill a port, run:
+```bash 
+    ./pScan kill -p 8000
+```
+the command will ask for confirmation and if you agree the port is closed.
